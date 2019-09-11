@@ -53,7 +53,7 @@ class Training():
     def model(self, _ep, _train_cost, X_features_ph, x_features_training, Y_labels_ph, y_labels_training, theta, theta_cero):
         self.ep = _ep
         self.train_cost = _train_cost
-        print('\n\tStart Trainig...\r\n')
+        print('\n\tStart Training...\r\n')
         with tf.name_scope("starting_tensorflow_session"):
             with tf.Session() as sess:
                 sess.run(tf.global_variables_initializer())
@@ -67,3 +67,27 @@ class Training():
                 self.th = sess.run(theta)
                 self.th0 = sess.run(theta_cero)
         return self.ep, self.train_cost, self.th, self.th0
+
+
+# ************************************** Area de trabajo ********************************************************************************
+    def _J_func_test(self):
+        self.J_test = np.power(self.h_test - self.y_labels_test, 2)
+        return self.J_test
+
+    def mean_J_test_func(self, test_x_rows):
+        self.mean_J_test = (1/(2*test_x_rows))*np.sum(self._J_func_test())
+        return self.mean_J_test
+
+    def apply_test(self, _x_features_test, _y_labels_test):
+        print("\n\tStart Testing...\n")
+        self.x_features_test = _x_features_test
+        self.y_labels_test = _y_labels_test
+        test_x_rows = np.shape(self.x_features_test)[0]
+        self.h_test = np.dot(self.x_features_test, self.th) + self.th0
+        self.predice = self.mean_J_test_func(test_x_rows)
+        print('>> Prediction: {:.4f}.'.format(self.predice[0]))
+        #predice =  (1/(2*tam))*np.sum(np.power(hipo - y_labels_test, 2))
+        self.compara = np.abs(self.y_labels_test - self.predice) # errores
+        n_mal = np.sum(self.compara)/test_x_rows  # Saco el promedio de los errores. suma de todos los errores/np.shape(self.compara)[0]
+        self.t_accuracy = (test_x_rows - n_mal)/test_x_rows
+        return self.t_accuracy

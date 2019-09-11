@@ -4,4 +4,7 @@
 *.gif
 *.pyc
 *.ipynb
+*.doc
+*.docx
+*.pdf
 _pycache_

@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import tensorflow as tf
+import math
 from sklearn.model_selection import train_test_split as tts
 
 
@@ -19,15 +20,22 @@ class DataSet():
         self.dataset = _dataset.replace(np.nan, '0')
         return self.dataset
 
-    def data_to_norm(self, _dataframe):
+    def data_to_norm(self, _dataframe, mean=False):
         for _dims in _dataframe:
             if _dims == 'Cost':
                 break
             else:
-                _value_max = _dataframe[_dims].max()
-                _value_min = _dataframe[_dims].min()
-                #print('{}>> Valor max: {}, Valor min: {}'.format(_dims, _value_max, _value_min) )
-                _dataframe[_dims] = (_dataframe[_dims] - _value_min)/(_value_max - _value_min)
+                if mean == False:
+                    _value_max = _dataframe[_dims].max()
+                    _value_min = _dataframe[_dims].min()
+                    #print('{}>> Valor max: {}, Valor min: {}'.format(_dims, _value_max, _value_min) )
+                    _dataframe[_dims] = (_dataframe[_dims] - _value_min)/(_value_max - _value_min)
+                else:
+                    self.mean = _dataframe[_dims].mean()
+                    self.std = _dataframe[_dims].std()
+                    #print('{}>> mean: {}, std: {}'.format(dims, mean, std) )
+                    _dataframe[_dims] = (_dataframe[_dims] - self.mean)/math.sqrt(self.std)
+
         self.dataframe = _dataframe
         print('[OK]    DataFrame normalizado')
         return self.dataframe
