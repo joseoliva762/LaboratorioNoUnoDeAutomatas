@@ -43,6 +43,6 @@ class DataSet():
     def get_characteristic(self, _dataframe):
         _trainig_data = _dataframe.shape[0] * _dataframe.shape[1]
         self.x_features = _dataframe[['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT' ]].dropna(axis=0, how='any')
-        self.y_labels = _dataframe[['Cost']].dropna(axis=0, how='any')
+        self.y_labels = _dataframe[['Cost']].dropna(axis=0, how='any') # dopna es para Elimiar los valores en el eje de las filas si estas no existen para que no me respinda con NaN
         print('[OK]    Get characteristic')
         return self.x_features,  self.y_labels

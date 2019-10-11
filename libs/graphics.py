@@ -26,3 +26,7 @@ class Graphics():
     def graphics_with_plot(self, ep, train_cost):
         plt.plot(ep, train_cost)
         self.show_img()
+
+    def graphics_hist(self, value_1, value_2):
+        plt.hist([value_1, np.sum(value_2)/value_2.shape[0]])
+        self.show_img()

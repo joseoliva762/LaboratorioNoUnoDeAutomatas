@@ -36,6 +36,7 @@ def main(dataframe):
 
     # Aplicamos el test
     t_accuracy = trng.apply_test(x_features_test, y_labels_test)
+    #gphs.graphics_hist(trng.predice, y_labels_test)
     print('>> Accuracy: {:.4f} %\n'.format(t_accuracy[0]*100))
     print('\tTesting Completed.')
 
@@ -44,11 +45,11 @@ if __name__=='__main__':
     ruta_xlsx = 'dataset/boston.xlsx'
     ruta = 'dataset/boston.csv'
     ds = DataSet(ruta)
-    trng = Training(lr=0.52)  # Para la normalizacion con mean: lr=0.009, y con max_value lr=0.52 o simplemente se deja vacia la casilla
+    trng = Training(lr=0.008)  # Para la normalizacion con mean: lr=0.008, y con max_value lr=0.52 o simplemente se deja vacia la casilla
     gphs = Graphics()                                                        # Inicializo mi clase dataset
     ds.convert_dataset_from_xlsx_to_csv(ruta_xlsx)
     dataset = ds.get_dataset()
     #Creamos el dataframe
-    dataframe = ds.data_to_norm(pd.DataFrame(dataset), mean=False)   # Primero se convierte a un dataframe de pandas>> dataframe = pd.DataFrame(dataset)
-                                                                    # Para normalizacioncon mean: mean=True, con max_value false o vacio
+    dataframe = ds.data_to_norm(pd.DataFrame(dataset), mean=True)   # Primero se convierte a un dataframe de pandas>> dataframe = pd.DataFrame(dataset)                                                            # Para normalizacioncon mean: mean=True, con max_value false o vacio
+    #print(ds.dataframe)
     main(dataframe)

@@ -84,6 +84,7 @@ class Training():
         self.y_labels_test = _y_labels_test
         test_x_rows = np.shape(self.x_features_test)[0]
         self.h_test = np.dot(self.x_features_test, self.th) + self.th0
+        #print(self.y_labels_test.shape)
         self.predice = self.mean_J_test_func(test_x_rows)
         print('>> Prediction: {:.4f}.'.format(self.predice[0]))
         #predice =  (1/(2*tam))*np.sum(np.power(hipo - y_labels_test, 2))
